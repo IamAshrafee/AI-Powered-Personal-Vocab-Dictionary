@@ -1,14 +1,40 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 const Words = () => {
   const [words, setWords] = useState([]);
   const [filter, setFilter] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
+  const [openDropdownId, setOpenDropdownId] = useState(null);
+  const dropdownRef = useRef(null);
 
   useEffect(() => {
     const storedWords = JSON.parse(localStorage.getItem("words")) || [];
     setWords(storedWords);
   }, []);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setOpenDropdownId(null);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  const toggleDropdown = (wordId) => {
+    setOpenDropdownId(openDropdownId === wordId ? null : wordId);
+  };
+
+  const handleDelete = (wordId) => {
+    const updatedWords = words.filter((word) => word.id !== wordId);
+    setWords(updatedWords);
+    localStorage.setItem("words", JSON.stringify(updatedWords));
+    setOpenDropdownId(null);
+  };
 
   // Filter words based on selected filter and search query
   const filteredWords = words.filter(word => {
@@ -91,11 +117,25 @@ const Words = () => {
                       </span>
                     </div>
                   </div>
-                  <button className="text-gray-400 hover:text-gray-600">
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"></path>
-                    </svg>
-                  </button>
+                  <div className="relative" ref={dropdownRef}>
+                    <button onClick={() => toggleDropdown(word.id)} className="text-gray-400 hover:text-gray-600">
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"></path>
+                      </svg>
+                    </button>
+                    {openDropdownId === word.id && (
+                      <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10">
+                        <div className="py-1">
+                          <button
+                            onClick={() => handleDelete(word.id)}
+                            className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                          >
+                            Delete
+                          </button>
+                        </div>
+                      </div>
+                    )}
+                  </div>
                 </div>
                 
                 <p className="text-gray-700 mb-4">{word.meaning}</p>
