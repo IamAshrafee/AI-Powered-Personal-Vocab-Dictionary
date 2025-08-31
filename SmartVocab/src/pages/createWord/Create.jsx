@@ -1,12 +1,15 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router";
 
 const Create = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     word: "",
     uses: "",
     meaning: "",
     exampleSentence: "",
     partOfSpeech: "",
+    category: "",
     synonyms: "",
     antonyms: "",
     description: "",
@@ -22,8 +25,17 @@ const Create = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle form submission here
-    console.log(formData);
+    const existingWords = JSON.parse(localStorage.getItem("words")) || [];
+    const newWord = {
+      ...formData,
+      id: Date.now(),
+      dateAdded: new Date().toISOString().slice(0, 10),
+      synonyms: formData.synonyms.split(",").map(s => s.trim()),
+      antonyms: formData.antonyms.split(",").map(a => a.trim()),
+    };
+    const updatedWords = [...existingWords, newWord];
+    localStorage.setItem("words", JSON.stringify(updatedWords));
+    navigate("/words");
   };
 
   return (

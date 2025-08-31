@@ -1,75 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 const Words = () => {
+  const [words, setWords] = useState([]);
   const [filter, setFilter] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
 
-  // Sample word data
-  const sampleWords = [
-    {
-      id: 1,
-      word: "Ephemeral",
-      meaning: "Lasting for a very short time",
-      partOfSpeech: "adjective",
-      category: "literary",
-      example: "Fashion trends are ephemeral by nature.",
-      synonyms: ["transient", "fleeting", "brief"],
-      dateAdded: "2023-10-15"
-    },
-    {
-      id: 2,
-      word: "Ubiquitous",
-      meaning: "Present, appearing, or found everywhere",
-      partOfSpeech: "adjective",
-      category: "academic",
-      example: "Smartphones have become ubiquitous in modern society.",
-      synonyms: ["omnipresent", "universal", "everywhere"],
-      dateAdded: "2023-09-22"
-    },
-    {
-      id: 3,
-      word: "Serendipity",
-      meaning: "The occurrence of events by chance in a happy or beneficial way",
-      partOfSpeech: "noun",
-      category: "general",
-      example: "Finding my favorite book at the flea market was pure serendipity.",
-      synonyms: ["chance", "luck", "fortuity"],
-      dateAdded: "2023-11-05"
-    },
-    {
-      id: 4,
-      word: "Eloquent",
-      meaning: "Fluent or persuasive in speaking or writing",
-      partOfSpeech: "adjective",
-      category: "academic",
-      example: "Her eloquent speech moved the entire audience.",
-      synonyms: ["articulate", "expressive", "fluent"],
-      dateAdded: "2023-08-17"
-    },
-    {
-      id: 5,
-      word: "Resilient",
-      meaning: "Able to withstand or recover quickly from difficult conditions",
-      partOfSpeech: "adjective",
-      category: "general",
-      example: "Children are often more resilient than adults give them credit for.",
-      synonyms: ["tough", "durable", "strong"],
-      dateAdded: "2023-07-29"
-    },
-    {
-      id: 6,
-      word: "Paradigm",
-      meaning: "A typical example or pattern of something",
-      partOfSpeech: "noun",
-      category: "academic",
-      example: "The invention of the smartphone represented a paradigm shift in communication.",
-      synonyms: ["model", "pattern", "example"],
-      dateAdded: "2023-10-02"
-    }
-  ];
+  useEffect(() => {
+    const storedWords = JSON.parse(localStorage.getItem("words")) || [];
+    setWords(storedWords);
+  }, []);
 
   // Filter words based on selected filter and search query
-  const filteredWords = sampleWords.filter(word => {
+  const filteredWords = words.filter(word => {
     const matchesFilter = filter === "all" || word.category === filter;
     const matchesSearch = word.word.toLowerCase().includes(searchQuery.toLowerCase()) || 
                          word.meaning.toLowerCase().includes(searchQuery.toLowerCase());
@@ -77,7 +19,7 @@ const Words = () => {
   });
 
   // Get unique categories for filter
-  const categories = [...new Set(sampleWords.map(word => word.category))];
+  const categories = [...new Set(words.map(word => word.category))];
 
   return (
     <div className="min-h-screen bg-gray-50 font-sans">
@@ -160,13 +102,13 @@ const Words = () => {
                 
                 <div className="mb-4">
                   <p className="text-sm text-gray-600 mb-1">Example:</p>
-                  <p className="text-gray-800 italic">"{word.example}"</p>
+                  <p className="text-gray-800 italic">"{word.exampleSentence}"</p>
                 </div>
-                
+
                 <div>
                   <p className="text-sm text-gray-600 mb-1">Synonyms:</p>
                   <div className="flex flex-wrap gap-2">
-                    {word.synonyms.map((synonym, index) => (
+                    {Array.isArray(word.synonyms) && word.synonyms.map((synonym, index) => (
                       <span key={index} className="text-xs font-medium text-gray-700 bg-gray-100 px-2 py-1 rounded">
                         {synonym}
                       </span>
