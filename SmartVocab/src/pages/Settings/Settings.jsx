@@ -42,7 +42,7 @@ const Settings = () => {
     <div className="min-h-screen bg-gray-50 font-sans">
 
       {/* Main Content */}
-      <div className="max-w-4xl mx-auto px-4 py-8"></div>
+      <div className="max-w-4xl mx-auto px-4 pb-8"></div>
     </div>
   );
 };

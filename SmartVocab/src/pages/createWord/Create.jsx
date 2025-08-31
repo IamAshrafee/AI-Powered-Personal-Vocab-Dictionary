@@ -9,14 +9,14 @@ const Create = () => {
     partOfSpeech: "",
     synonyms: "",
     antonyms: "",
-    description: ""
+    description: "",
   });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prevState => ({
+    setFormData((prevState) => ({
       ...prevState,
-      [name]: value
+      [name]: value,
     }));
   };
 
@@ -28,18 +28,26 @@ const Create = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 font-sans">
-
       {/* Main Content */}
-      <div className="max-w-4xl mx-auto px-4 py-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Create New Word</h1>
-        <p className="text-gray-600 mb-8">Add a new word to your vocabulary collection</p>
-        
+      <div className="max-w-4xl mx-auto px-4 pb-8">
+        <h1 className="text-3xl font-bold text-gray-900 mb-2">
+          Create New Word
+        </h1>
+        <p className="text-gray-600 mb-8">
+          Add a new word to your vocabulary collection
+        </p>
+
         {/* Form */}
-        <form onSubmit={handleSubmit} className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
+        <form
+          onSubmit={handleSubmit}
+          className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm"
+        >
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Word Input */}
             <div className="md:col-span-2">
-              <label className="block text-sm font-medium text-gray-800 mb-2">Word *</label>
+              <label className="block text-sm font-medium text-gray-800 mb-2">
+                Word *
+              </label>
               <input
                 type="text"
                 name="word"
@@ -50,10 +58,12 @@ const Create = () => {
                 required
               />
             </div>
-            
+
             {/* Part of Speech */}
             <div>
-              <label className="block text-sm font-medium text-gray-800 mb-2">Part of Speech</label>
+              <label className="block text-sm font-medium text-gray-800 mb-2">
+                Part of Speech
+              </label>
               <select
                 name="partOfSpeech"
                 value={formData.partOfSpeech}
@@ -73,31 +83,34 @@ const Create = () => {
             </div>
 
             {/* Word Category */}
-<div>
-  <label className="block text-sm font-medium text-gray-800 mb-2">Word Category</label>
-  <select
-    name="category"
-    value={formData.category}
-    onChange={handleChange}
-    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-800 focus:border-transparent"
-  >
-    <option value="">Select category</option>
-    <option value="general">General</option>
-    <option value="academic">Academic</option>
-    <option value="business">Business</option>
-    <option value="technical">Technical</option>
-    <option value="literary">Literary</option>
-    <option value="slang">Slang</option>
-    <option value="other">Other</option>
-  </select>
-</div>
-            
+            <div>
+              <label className="block text-sm font-medium text-gray-800 mb-2">
+                Word Category
+              </label>
+              <select
+                name="category"
+                value={formData.category}
+                onChange={handleChange}
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-800 focus:border-transparent"
+              >
+                <option value="">Select category</option>
+                <option value="general">General</option>
+                <option value="academic">Academic</option>
+                <option value="business">Business</option>
+                <option value="technical">Technical</option>
+                <option value="literary">Literary</option>
+                <option value="slang">Slang</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+
             {/* Empty div for grid spacing */}
-            
-            
+
             {/* Meaning */}
             <div className="md:col-span-2">
-              <label className="block text-sm font-medium text-gray-800 mb-2">Simple Meaning</label>
+              <label className="block text-sm font-medium text-gray-800 mb-2">
+                Simple Meaning
+              </label>
               <textarea
                 name="meaning"
                 value={formData.meaning}
@@ -107,10 +120,12 @@ const Create = () => {
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-800 focus:border-transparent"
               ></textarea>
             </div>
-            
+
             {/* Uses */}
             <div className="md:col-span-2">
-              <label className="block text-sm font-medium text-gray-800 mb-2">Uses & Context</label>
+              <label className="block text-sm font-medium text-gray-800 mb-2">
+                Uses & Context
+              </label>
               <textarea
                 name="uses"
                 value={formData.uses}
@@ -120,10 +135,12 @@ const Create = () => {
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-800 focus:border-transparent"
               ></textarea>
             </div>
-            
+
             {/* Example Sentence */}
             <div className="md:col-span-2">
-              <label className="block text-sm font-medium text-gray-800 mb-2">Example Sentence</label>
+              <label className="block text-sm font-medium text-gray-800 mb-2">
+                Example Sentence
+              </label>
               <textarea
                 name="exampleSentence"
                 value={formData.exampleSentence}
@@ -133,10 +150,12 @@ const Create = () => {
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-800 focus:border-transparent"
               ></textarea>
             </div>
-            
+
             {/* Synonyms */}
             <div>
-              <label className="block text-sm font-medium text-gray-800 mb-2">Synonyms</label>
+              <label className="block text-sm font-medium text-gray-800 mb-2">
+                Synonyms
+              </label>
               <input
                 type="text"
                 name="synonyms"
@@ -146,10 +165,12 @@ const Create = () => {
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-800 focus:border-transparent"
               />
             </div>
-            
+
             {/* Antonyms */}
             <div>
-              <label className="block text-sm font-medium text-gray-800 mb-2">Antonyms</label>
+              <label className="block text-sm font-medium text-gray-800 mb-2">
+                Antonyms
+              </label>
               <input
                 type="text"
                 name="antonyms"
@@ -159,10 +180,12 @@ const Create = () => {
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-800 focus:border-transparent"
               />
             </div>
-            
+
             {/* Description */}
             <div className="md:col-span-2">
-              <label className="block text-sm font-medium text-gray-800 mb-2">Additional Notes</label>
+              <label className="block text-sm font-medium text-gray-800 mb-2">
+                Additional Notes
+              </label>
               <textarea
                 name="description"
                 value={formData.description}
@@ -173,7 +196,7 @@ const Create = () => {
               ></textarea>
             </div>
           </div>
-          
+
           {/* Submit Button */}
           <div className="mt-8 flex justify-end space-x-3">
             <button
@@ -193,7 +216,9 @@ const Create = () => {
 
         {/* Tips Section */}
         <div className="mt-12 bg-gray-100 rounded-xl p-6 border border-gray-200">
-          <h2 className="text-xl font-semibold text-gray-900 mb-4">💡 Pro Tips</h2>
+          <h2 className="text-xl font-semibold text-gray-900 mb-4">
+            💡 Pro Tips
+          </h2>
           <ul className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-gray-700">
             <li className="flex items-start">
               <span className="mr-2">•</span>
